@@ -1,0 +1,18 @@
+{
+    "version": 2,
+    "settings": {
+            "blocks": {
+                "core/cover": {
+                    "color": {
+                        "palette": [
+                            {
+                                "name": "Blue",
+                                "slug": "blue",
+                                "color": "#0000FF"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }        
