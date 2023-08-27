@@ -8,8 +8,8 @@
             action : 'send_email',
         }; */
 
-       var token_val = form_ajax.token;
-        console.log(token_val);
+       //var token_val = form_ajax.token;
+       // console.log(token_val);
 
         var formData = $('#enquiry').serialize();
         alert(formData);
