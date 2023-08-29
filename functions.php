@@ -336,3 +336,50 @@ function send_pagenum(){
 
 }
 }
+
+
+
+
+/** Shortcode */
+
+function display_date(){
+    $date =  date("Y/m/d");
+    return $date;
+}
+
+add_shortcode('date', 'display_date');
+
+
+/** Shortcode **/
+
+
+function foobar_func($atts){
+     
+    $a = shortcode_atts(array(
+            'foo' => 'something',
+            'bar' => 'something else',
+    ), $atts);
+
+	return "foo = {$a['foo']}";
+}
+add_shortcode( 'foobar', 'foobar_func' );
+
+
+
+
+/** shortcode to display images */
+
+function display_img($atts){
+
+    $a = shortcode_atts( array(
+		'src' => 'https://cdn.pixabay.com/photo/2023/08/08/18/01/butterfly-8177925_1280.jpg',
+        'w'=> '300',
+	), $atts );
+
+    return "<img src = '$a[src]' width='$a[w]' height='300'";
+
+}
+
+add_shortcode('image', 'display_img');
+
+//[img src ="" w= ""];
