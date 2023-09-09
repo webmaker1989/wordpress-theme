@@ -1,5 +1,22 @@
+@font-face {
+    font-family: "inter";
+    src: url('http://localhost/wordpress-class/wp-content/themes/starwebfront/assets/fonts/Inter-Light.ttf');
+    font-weight: normal;
+  }
+
+  @font-face {
+    font-family: 'Inter-bold';
+    src: url('http://localhost/wordpress-class/wp-content/themes/starwebfront/assets/fonts/Inter-Bold.ttf');
+    
+  }
+
+
 header {
-    background-color: black;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    background-color: rgba(0,0,0,0.2);
 }
 
 header a.nav-link {
@@ -37,7 +54,7 @@ header a.nav-link:hover {
     color: #2898DA;
 }
 
-.archive-page-thumbnails {
+/* .archive-page-thumbnails {
     width: 300px;
     height: 200px;
 }
@@ -46,4 +63,23 @@ header a.nav-link:hover {
     width: 100%;
     height: 200px;
     object-fit: cover;
+} */
+
+@media (max-width: 992px){
+    .web-logo {
+        width: 50%;
+        order: 1;
+        text-align: left !important;
+    }
+
+    .nav-outer-container{
+        width: 100%;
+        order: 3;
+    }
+
+    .contact-btn{
+        width: 50%;
+        text-align: right !important;
+        order: 2;
+    }
 }

@@ -16,3 +16,219 @@ This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
 
+
+.banner-bg {
+    height: 815px;
+	background-color: rgba(0, 49, 111, 1);
+}
+
+.banner-heading {
+	max-width: 712px;
+	margin: auto;
+	color: #FFF !important;
+	text-align: center;
+	font-size: 55px;
+	font-style: normal;
+	font-weight: 300;
+	line-height: 60px; 
+	font-family: "inter";
+}
+
+.banner-heading strong{
+	font-weight: 700;
+}
+
+.banner-content {
+	max-width: 940px;
+	margin: 20px auto;
+	color: #FFF !important;
+	text-align: center;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 35px; /* 194.444% */
+	font-family: "inter";
+}
+
+.banner-btn {
+	background-color: #AA1803;
+	color: #FFF;
+	width: 300px;
+	margin: 10px auto;
+	text-align: center;
+	border-radius: 8px;
+	font-family: "inter";
+}
+
+.banner-btn a {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 8px 20px;
+}
+
+div#about-us {
+    max-width: 1402px;
+    margin: 100px auto;
+	justify-content: space-between;
+	font-family: "inter";
+}
+
+.title {
+    color: #2898DA;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 35px; /* 194.444% */
+	text-transform: uppercase;
+	margin-bottom: 0;
+}
+
+.sub-title {
+    color: #404C5B;
+	font-size: 45px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 35px; /* 77.778% */
+	margin: 20px 0;
+}
+
+.content {
+	color: #404C5B;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 30px; /* 187.5% */
+}
+
+p.about-sub-block-title {
+    color: #2898DA;
+	font-size: 22px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 35px; /* 159.091% */
+}
+
+.svg-block {
+    display: flex;
+    gap: 10px;
+}
+
+.svg-block p {
+    color: #404C5B;
+	font-size: 45px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 30px; /* 66.667% */
+	margin-bottom: 10px;
+}
+
+.svg-block p:nth-child(2) {
+	font-size: 16px
+}
+
+div#services{
+	background: #EFF2F2;
+	padding: 110px 0;
+}
+
+.services-container{
+    max-width: 1402px;
+    margin: 0 auto;
+	font-family: "inter";
+}
+
+.service-col {
+    border: 1px solid #EBEBEB;
+    background: #FFF;
+    padding: 40px 20px;
+}
+
+.svg-container {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid #EBEBEB;
+	background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.service-col svg {
+    background: #FFF;
+}
+
+.service-col h4{
+    color: #404C5B;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 90.909% */
+    margin: 20px 0;
+}
+
+.service-col p {
+    color: #404C5B;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 28px; /* 175% */
+}
+
+.service-col a {
+    background: #2898DA;
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 8px 14px;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.service-col:hover {
+    border: 1px solid #2898DA;
+    background: #2898DA;
+}
+
+.service-col:hover h4, .service-col:hover p {
+	color: #fff;
+}
+
+.service-col:hover a {
+	background: #fff;
+	color: #404C5B !important;
+}
+
+
+
+/** 
+Slider Css for projects 
+**/
+
+.project-block {
+    border: 1px solid grey;
+    width: 100%;
+    position: relative;
+    height: 445px;
+}
+
+img.attachment-blog-thumbnail.size-blog-thumbnail.wp-post-image {
+    width: 100%;
+    object-fit: cover;
+    position: absolute;
+    height: 100%;
+    z-index: 10;
+}
+
+.project-info {
+    position: absolute;
+    z-index: 100;
+    bottom: 20px;
+    color: #fff;
+    left: 40px;
+}

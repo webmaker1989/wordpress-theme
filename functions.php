@@ -16,6 +16,14 @@ function register_stylesheet(){
 
     wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' );
 
+    wp_enqueue_style('slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), false, 'all');
+
+    wp_enqueue_style('slick-theme', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css', array('slick-css'), 
+    false, 'all');
+    
+    wp_enqueue_script( 'slick-script', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', 
+    array(), false , true);
+
     wp_enqueue_style( 'main-style', get_template_directory_uri() . '/assets/css/main.css', array(), 
     filemtime(get_template_directory() . '/assets/css/main.css'), 'all');
 
@@ -369,7 +377,7 @@ add_shortcode( 'foobar', 'foobar_func' );
 
 /** shortcode to display images */
 
-function display_img($atts){
+ function display_img($atts){
 
     $a = shortcode_atts( array(
 		'src' => 'https://cdn.pixabay.com/photo/2023/08/08/18/01/butterfly-8177925_1280.jpg',
@@ -381,5 +389,172 @@ function display_img($atts){
 }
 
 add_shortcode('image', 'display_img');
-
+ 
 //[img src ="" w= ""];
+
+
+
+
+
+
+/** display 2 most recent posts shortcode */
+
+//[recent_posts cat_name= '' number = 3] it will display three posts
+
+/** display 2 most recent posts shortcode */
+
+// [recent_posts number="3" cat_name=""] it will display three posts
+
+add_shortcode('recent_posts', 'most_recent_fun');
+
+function most_recent_fun($atts){
+    $a = shortcode_atts( array(
+        'number' => 3,
+        'cat_name' => 'seo',
+    ), $atts );
+
+    $args = array(
+        'post_type' => 'post', // Changed 'post' to 'post_type'
+        'category_name' => $a['cat_name'],
+        'post_status' => array(
+            'publish',
+            'future'
+        ),
+        'posts_per_page' => $a['number'],
+    );
+
+    $query = new WP_Query($args);
+    if ($query->have_posts()) {
+        $output = ''; // Create a variable to store the output
+
+        while ($query->have_posts()) {
+            $query->the_post();
+            // Append each post title to the output
+            $output .= '<div class="post-container">';
+            $output .= '<h3>' . get_the_title() . '</h3>';
+            $output .= '</div>';
+        }
+
+        return $output; // Return the generated HTML
+    }
+}
+
+
+
+
+/**
+ * Adding slick js before closing of body tag
+ */
+
+
+/*  function enqueue_slick_slider(){
+    wp_enqueue_style('slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), false, 'all');
+
+    wp_enqueue_style('slick-theme', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css', array('slick-css'), false, 'all');
+    
+    wp_enqueue_script( 'slick-script', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', 
+    array(), false , 'true');
+ }
+ 
+ add_action('wp_footer', 'enqueue_slick_slider');
+  */
+ 
+ 
+ function slick_slider(){ ?>
+ 
+ <script>
+ 
+ jQuery(document).ready(function(){
+   jQuery('.slick-class').slick({
+   dots: true,
+   infinite: true,
+   speed: 300,
+   slidesToShow: 2,
+   slidesToScroll: 2,
+   responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ]
+
+ });
+ });
+     
+  
+ </script>
+ 
+ <?php	
+ }
+ 
+ add_action('wp_footer', 'slick_slider');
+
+
+
+
+ 
+ function project_slider_shortcode() {
+    $args = array(
+        'post_type' => 'project', // Changed 'post' to 'post_type'
+        'post_status' => array('publish')
+    );
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+
+        ob_start();
+
+        $output = '';
+
+        $output .= '<div class="project-outer-container slick-class">';
+        while ($query->have_posts()) {
+            $query->the_post();
+            $output .= '<div class="project-container">  
+                <div class="project-block">
+                    <div class="archive-page-thumbnails w-full">' . get_the_post_thumbnail(get_the_ID(), 'blog-thumbnail') . '</div>
+                    <div class="project-info">
+                        <h3>' . get_the_title() . '</h3> <p>'. get_the_excerpt() .
+						'</p><a href="' . the_permalink() . '" class="btn btn-success">Read More</a>
+                    </div>
+                </div>
+            </div>';
+        }
+
+        $output .= '</div>';
+
+        // Restore the global post data
+        wp_reset_postdata();
+        ob_get_clean();
+        return $output;
+    }
+}
+add_shortcode('project_slider', 'project_slider_shortcode');
+
+
+
+
+
+

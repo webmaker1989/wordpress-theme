@@ -8,10 +8,10 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <header>
-<div class="container-fluid py-2">
+<div class="container-fluid py-2 px-4">
   <div class="row d-flex justify-content-between align-items-center">
-    <div class="col-lg-4 text-center text-lg-start"><?php the_custom_logo(); ?></div>
-    <div class="col-lg-4 my-2 my-lg-0">
+    <div class="col-lg-4 text-center text-lg-start web-logo"><?php the_custom_logo(); ?></div>
+    <div class="col-lg-4 my-2 my-lg-0 nav-outer-container">
     <?php 
     wp_nav_menu( 
     array( 
@@ -24,7 +24,7 @@
         ) );
         ?>
     </div>
-    <div class="col-lg-4 text-center text-lg-end"><a href="#" class="btn btn-primary">Link Button</a></div>
+    <div class="col-lg-4 text-center text-lg-end contact-btn"><a href="#" class="btn btn-primary">Link Button</a></div>
   </div>
 </div>
     </header>
