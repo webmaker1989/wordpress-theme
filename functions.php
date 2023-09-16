@@ -289,15 +289,23 @@ function send_email() {
 function starweb_loadmore_script(){
     wp_enqueue_script('ajaxloadmore', get_template_directory_uri() . '/assets/js/loadmore.js', array('jquery'), 1.1, true);
 
-  // Create a new WP_Query instance to get the main query
-  $query = new WP_Query();
+   // Define the query arguments for your main query
+   $args = array(
+    'post_type' => 'post',
+    'post_status' => 'publish',
+    'order' => 'DESC',
+    'posts_per_page' => 3,
+);
+
+// Create a new WP_Query instance with these arguments
+$query = new WP_Query($args);
 
    // wp_localize_script('$handle', $object_name, $l10n)
 
    wp_localize_script('ajaxloadmore', 'load_more_obj', array(
-   // 'max_page' => $query->max_num_pages,
+    'max_page' => $query->max_num_pages,
     'ajax_url' => admin_url('admin-ajax.php'),
-   // 'security' => wp_create_nonce("user_more_following"),
+    'security' => wp_create_nonce("user_more_following"),
    ));
 }
 
@@ -307,23 +315,40 @@ add_action('wp_enqueue_scripts', 'starweb_loadmore_script');
 add_action('wp_ajax_send_pagenum', 'send_pagenum');
 add_action('wp_ajax_nopriv_send_pagenum', 'send_pagenum'); 
 
-function send_pagenum(){
-    /* if(!wp_verify_nonce($_POST['security'], 'user_more_following')){
+function send_pagenum() {
+    if (!wp_verify_nonce($_POST['security'], 'user_more_following')) {
         wp_send_json_error("Nonce is incorrect", 401);
         die();
-    } */
+    }
 
-   // $page = $_POST['page'];
-    
-    // Testing a simple response
-    $response = "This is page";
+    $args = array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'order' => 'DESC',
+        'posts_per_page' => 3,
+        'paged' => $_POST['page']
+    );
 
-    // Sending a simple JSON response
-    wp_send_json_success($response);
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) { ?>
+        <div class="container post-container row mx-auto my-5">
+        <?php    
+        while ($query->have_posts()) {
+            $query->the_post();
+            get_template_part('includes/section', 'card');
+        } ?>
+        </div>
+        <?php
+        wp_reset_postdata();
+    } else {
+        // No more posts to load
+        echo 'No more posts';
+    }
+
+    // Make sure to exit the function to avoid sending extra data
+    exit();
 }
-
-
-
 
 
 

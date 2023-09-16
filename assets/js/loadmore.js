@@ -1,33 +1,41 @@
 let btn = document.getElementById('btn');
 let responseContainer = document.getElementById('response-container');
-let currPage = 1; // Initialize the current page
+let currPage = 2; // Initialize the current page (assuming the first page is already loaded)
 
 btn.addEventListener('click', ajaxfunction);
 
 function ajaxfunction() {
-     // Update the bodyParams to include the page parameter
-    const bodyParams = {
-        action: 'action=send_pagenum', // Update action name
-      //  nonce: 'security=' + load_more_obj.security, 
-       // page: 'page=' + currPage, // Add the 'page=' prefix
-    };
+    // Update the bodyParams to include the page parameter
+    const bodyParams = new URLSearchParams({
+        action: 'send_pagenum', // Update action name
+        security: load_more_obj.security,
+        page: currPage, // Update the current page
+    });
 
-    console.log(bodyParams);
-    console.log(bodyParams.action); 
+    //console.log(bodyParams.toString());
 
     fetch(load_more_obj.ajax_url, {
-        method: "post",
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: bodyParams.action
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: bodyParams.toString()
     })
     .then(res => {
         return res.text();
     })
     .then(response => {
-        // Append the new response to the response container
-       // responseContainer.innerHTML += response + '<br>';
-       // currPage++; // Increment the current page for the next request
-      console.log(response);
+        if (response.trim() !== '') {
+            // Append the new response to the response container
+            responseContainer.innerHTML += response;
+            currPage++; // Increment the current page for the next request
+            //console.log(load_more_obj.max_page);
+        }  
+        else if (response.trim() === 'No more posts') {
+                // No more posts to load, hide the "Load More" button
+                btn.style.display = 'none';
+        }
+    
     })
     .catch(error => {
         console.error(error);
