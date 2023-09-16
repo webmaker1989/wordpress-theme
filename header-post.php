@@ -7,7 +7,7 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<header class= "nav-header">
+<header class = "post-header-nav">
 <div class="container-fluid py-2 px-4">
   <div class="row d-flex justify-content-between align-items-center">
     <div class="col-lg-4 text-center text-lg-start web-logo"><?php the_custom_logo(); ?></div>

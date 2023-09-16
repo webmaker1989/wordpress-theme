@@ -295,9 +295,9 @@ function starweb_loadmore_script(){
    // wp_localize_script('$handle', $object_name, $l10n)
 
    wp_localize_script('ajaxloadmore', 'load_more_obj', array(
-    'max_page' => $query->max_num_pages,
+   // 'max_page' => $query->max_num_pages,
     'ajax_url' => admin_url('admin-ajax.php'),
-    'security' => wp_create_nonce("user_more_following"),
+   // 'security' => wp_create_nonce("user_more_following"),
    ));
 }
 
@@ -308,42 +308,21 @@ add_action('wp_ajax_send_pagenum', 'send_pagenum');
 add_action('wp_ajax_nopriv_send_pagenum', 'send_pagenum'); 
 
 function send_pagenum(){
-    //echo "hello world";
-
-    if(!wp_verify_nonce($_POST['security'], 'user_more_following')){
-        wp_send_json_error("Nonce is incorrect",401);
+    /* if(!wp_verify_nonce($_POST['security'], 'user_more_following')){
+        wp_send_json_error("Nonce is incorrect", 401);
         die();
-    }
+    } */
 
-    $args = array(
-        'cat' => 4,
-        'post_status' => array( // (string | array) - use post status. Retrieves posts by Post Status, default value i'publish'.
-            'publish', // - a published post or page.
-            'future'// - a post to publish in the future.
-          ),
-          'posts_per_page' => 1,
-          'paged' => $_POST['currPage']
-     ); 
-    $query = new WP_Query($args);
+   // $page = $_POST['page'];
     
-    if ( $query->have_posts() ) {
-    
-        while (  $query->have_posts() ) {
-            $query->the_post(); ?>
-    
-    <?php get_template_part('includes/section', 'card'); ?>
+    // Testing a simple response
+    $response = "This is page";
 
-        <?php
-        
-     // Always remember to use wp_reset_postdata() after a custom query
-    wp_reset_postdata();
-
-    // Make sure to exit the function to avoid sending extra data
-    exit();   
-    }
-
+    // Sending a simple JSON response
+    wp_send_json_success($response);
 }
-}
+
+
 
 
 
@@ -515,46 +494,40 @@ function most_recent_fun($atts){
 
 
  
+
  function project_slider_shortcode() {
     $args = array(
-        'post_type' => 'project', // Changed 'post' to 'post_type'
-        'post_status' => array('publish')
+        'post_type' => 'post', // Changed 'post' to 'post_type'
+        'post_status' => array( 'publish'
+        )
     );
 
     $query = new WP_Query($args);
 
     if ($query->have_posts()) {
+   
+    $output = '';
 
-        ob_start();
-
-        $output = '';
-
-        $output .= '<div class="project-outer-container slick-class">';
-        while ($query->have_posts()) {
-            $query->the_post();
-            $output .= '<div class="project-container">  
-                <div class="project-block">
-                    <div class="archive-page-thumbnails w-full">' . get_the_post_thumbnail(get_the_ID(), 'blog-thumbnail') . '</div>
-                    <div class="project-info">
-                        <h3>' . get_the_title() . '</h3> <p>'. get_the_excerpt() .
-						'</p><a href="' . the_permalink() . '" class="btn btn-success">Read More</a>
-                    </div>
+    $output .= '<div class="project-outer-container slick-class">';
+while ($query->have_posts() ) { 
+    $query->the_post(); 
+     $output .= '<div class="project-container">  
+            <div class="project-block">
+                <div class="archive-page-thumbnails w-full">' . the_post_thumbnail('blog-thumbnail') . '
                 </div>
-            </div>';
-        }
+                <div class="project-info">
+                <h3>' . the_title() . '</h3>
+                </div>
+            </div>
+                
+        </div>';
+     }
 
-        $output .= '</div>';
+$output .= '</div>';
 
-        // Restore the global post data
-        wp_reset_postdata();
-        ob_get_clean();
-        return $output;
-    }
+return $output;
 }
+ }
 add_shortcode('project_slider', 'project_slider_shortcode');
-
-
-
-
 
 
