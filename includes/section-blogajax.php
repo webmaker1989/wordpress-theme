@@ -10,7 +10,7 @@ $args = array(
 $query = new WP_Query($args);
 
 if ($query->have_posts()) : ?>
-    <div class="container post-container row mx-auto my-5">
+    <div class="container blog-post-container row mx-auto my-5">
         <?php while ($query->have_posts()) : $query->the_post(); ?>
             <?php get_template_part('includes/section', 'card'); ?>
         <?php endwhile; ?>

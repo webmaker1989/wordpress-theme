@@ -515,44 +515,104 @@ function most_recent_fun($atts){
  
  add_action('wp_footer', 'slick_slider');
 
-
-
-
  
-
+ 
  function project_slider_shortcode() {
     $args = array(
-        'post_type' => 'post', // Changed 'post' to 'post_type'
-        'post_status' => array( 'publish'
-        )
+        'post_type' => 'post',
+        'post_status' => array( 'publish' )
     );
 
     $query = new WP_Query($args);
 
     if ($query->have_posts()) {
-   
-    $output = '';
+        $output = '';
 
-    $output .= '<div class="project-outer-container slick-class">';
-while ($query->have_posts() ) { 
-    $query->the_post(); 
-     $output .= '<div class="project-container">  
-            <div class="project-block">
-                <div class="archive-page-thumbnails w-full">' . the_post_thumbnail('blog-thumbnail') . '
+        $output .= '<div class="project-outer-container slick-class">';
+        while ($query->have_posts() ) { 
+            $query->the_post(); 
+            $output .= '<div class="project-container">  
+                <div class="project-block">
+                    <div class="archive-page-thumbnails w-full">' . get_the_post_thumbnail(null, 'blog-thumbnail') . '
+                    </div>
+                    <div class="project-info">
+                        <h3>' . get_the_title() . '</h3>
+                    </div>
                 </div>
-                <div class="project-info">
-                <h3>' . the_title() . '</h3>
-                </div>
-            </div>
-                
-        </div>';
-     }
+            </div>';
+        }
 
-$output .= '</div>';
+        $output .= '</div>';
 
-return $output;
+        return $output;
+    }
 }
- }
 add_shortcode('project_slider', 'project_slider_shortcode');
 
 
+
+
+/**
+ * 4 Latest Posts on homepage shortcode
+ */
+
+
+add_shortcode('latest-posts', 'display_posts_homepage');
+
+function display_posts_homepage(){
+
+    $args = array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'posts_per_page' => 4,
+    ); 
+    
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        $output = '';
+
+        $output .= '<div class="latest-post-container">';
+        while ($query->have_posts() ) { 
+            $query->the_post(); 
+
+            $category = get_the_category(); // Get the category object for the post
+            $category_name = $category[0]->name; // Get the name of the first (current) category
+            $category_link = get_category_link($category[0]); 
+
+            $output .= '<div class="post-container">  
+                <div class="latest-post-block">
+                    <a class="latest-post-thumbnails" href="'. get_the_permalink().'">' . get_the_post_thumbnail(null, 'blog-thumbnail') . '
+                    </a>
+                    <div class="latest-post-content">
+                        <a class="cat_name" href="'. esc_url($category_link).'">' . $category_name .'</a>
+                        <a class="desc_name" href="'. get_the_permalink().'">' . get_field('description') .'</a>
+                        <p class="post_meta"><span class="post_date">' . get_the_date() . '</span><span class="read_time">'. gp_reading_time() .'</span></p>
+                    </div>
+                </div>
+            </div>';
+        }
+
+        $output .= '</div>';
+
+        return $output;
+    }
+
+}
+
+
+function gp_reading_time() {
+    $article = get_post_field( 'post_content', $post->ID ); //gets full text from article
+    $wordcount = str_word_count( strip_tags( $article ) ); //removes html tags
+    $time = ceil($wordcount / 250); //takes rounded of words divided by 250 words per minute
+        
+    if ($time == 1) { //grammar conversion
+        $label = " minute";
+    } else {
+        $label = " minutes";
+    }
+        
+    $totalString = $time . $label; //adds time with minute/minutes label
+    return $totalString;
+        
+    }
