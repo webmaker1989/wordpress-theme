@@ -1,5 +1,7 @@
 <?php
 
+header('X-XSS-Protection: 1; mode=block');
+header('X-Content-Type-Options: nosniff');
 
 /**add Style, bootstrap, jquery, font-awesome file */
 
@@ -258,7 +260,7 @@ function send_email() {
 
     //send data to email
 
-    /* $to = 'webmaker1989@gmail.com'; // Replace with the recipient's email address
+     $to = 'info@starwebfront.com'; // Replace with the recipient's email address
         $subject = 'New Form Submission';
         $message = 'Name: ' . $_POST['fname'] . "\n";
         $message .= 'Last name: ' . $_POST['lname'];
@@ -278,7 +280,7 @@ function send_email() {
     } else {
         // Email sending failed
         wp_send_json_error(array('message' => 'Failed to send email'));
-    }  */
+    }  
 
 
 }
@@ -332,7 +334,7 @@ function send_pagenum() {
     $query = new WP_Query($args);
 
     if ($query->have_posts()) { ?>
-        <div class="container post-container row mx-auto my-5">
+        <div class="container blog-post-container row mx-auto my-5">
         <?php    
         while ($query->have_posts()) {
             $query->the_post();
@@ -470,16 +472,17 @@ function most_recent_fun($atts){
  
  jQuery(document).ready(function(){
    jQuery('.slick-class').slick({
-   dots: true,
-   infinite: true,
-   speed: 300,
-   slidesToShow: 2,
-   slidesToScroll: 2,
-   responsive: [
+    dots: true,
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    responsive: [
     {
       breakpoint: 1024,
       settings: {
-        slidesToShow: 3,
+        slidesToShow: 1,
         slidesToScroll: 1,
         infinite: true,
         dots: true
@@ -488,8 +491,8 @@ function most_recent_fun($atts){
     {
       breakpoint: 600,
       settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2
+        slidesToShow: 1,
+        slidesToScroll: 1
       }
     },
     {
@@ -519,7 +522,7 @@ function most_recent_fun($atts){
  
  function project_slider_shortcode() {
     $args = array(
-        'post_type' => 'post',
+        'post_type' => 'project',
         'post_status' => array( 'publish' )
     );
 
@@ -535,9 +538,9 @@ function most_recent_fun($atts){
                 <div class="project-block">
                     <div class="archive-page-thumbnails w-full">' . get_the_post_thumbnail(null, 'blog-thumbnail') . '
                     </div>
-                    <div class="project-info">
+                   <!-- <div class="project-info">
                         <h3>' . get_the_title() . '</h3>
-                    </div>
+                    </div> -->
                 </div>
             </div>';
         }
@@ -616,3 +619,43 @@ function gp_reading_time() {
     return $totalString;
         
     }
+
+
+    /**
+     * shortcode to get corona data using free api
+     */
+
+     // Add the shortcode registration
+add_shortcode('corona_data', 'corona_fun');
+
+// Define the shortcode function
+function corona_fun($atts) {
+    // Extract attributes (city name) from the shortcode
+    $a = shortcode_atts(array(
+        'city' => '', // Default city name is empty
+    ), $atts);
+
+    // Get the city name from the shortcode attribute
+    $city_name = sanitize_text_field($a['city']);
+
+    // Check if a city name was provided
+    if (empty($city_name)) {
+        return 'Please provide a city name using the "city" attribute.';
+    }
+
+    $api_url = 'https://api.covidtracking.com/v2/states.json';
+    $json_data = file_get_contents($api_url);
+    $response_data = json_decode($json_data, true);
+    $data = $response_data['data'];
+
+    $population = '';
+
+    foreach ($data as $city) {
+        if (strtolower($city['name']) === strtolower($city_name)) {
+            $population = $city['census']['population'];
+            break; // Stop searching once the city is found
+        }
+    }
+
+    return "Population of $city_name: $population";
+}

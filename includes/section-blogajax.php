@@ -19,6 +19,6 @@ if ($query->have_posts()) : ?>
 
     <div id="response-container"></div>
 
-    <button type="button" class="btn btn-primary text-center mx-auto my-2" id="btn">Load More</button>
+    <button type="button" class="btn btn-primary text-center mx-auto my-2 d-block" id="btn">Load More</button>
 
 <?php endif; ?>

@@ -1,6 +1,32 @@
 <?php get_header('post');?>
 
-    <?php get_template_part('includes/section', 'blogajax'); ?>
+    <?php //get_template_part('includes/section', 'blogajax'); ?>
 
+    
+ <?php 
+ 
+ /* spl_autoload_register(function($class){
+    include 'inc/'. $class . '.php';
+ }); */
+
+
+ if(file_exists(dirname(__FILE__). '/vendor/autoload.php')){
+   require_once(dirname(__FILE__). '/vendor/autoload.php');
+ }
+
+ use Starwebfront\Student;
+ use Starwebfront\Test;
+ use Starwebfront\Person;
+
+ //new Student();
+ Student::check();
+  new Person();
+
+ $test = new Test();
+
+ $test->msg1(); 
+
+ 
+ ?>
 <?php get_footer();?>
 

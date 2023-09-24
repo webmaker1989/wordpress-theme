@@ -4,12 +4,12 @@ wp_footer();
 <div class= "main-footer py-4">
 
     <div class="inner-footer row">
-        <div class="site-name footer_link_block col-md-4 col-lg-2">
+        <div class="site-name footer_link_block col-6 col-sm-6 col-md-4 col-lg-2">
 					<div class="site-logo"><img src="http://localhost/wordpress-class/wp-content/uploads/2023/09/footer_logo-2.png" 
-                    alt="logo" width="194"></div>
+                    alt="logo" width="150"></div>
 		</div><!-- .site-name -->
 
-        <div class="footer_link_block col-md-4 col-lg-2">
+        <div class="footer_link_block col-6 col-sm-6 col-md-4 col-lg-2">
             <h3>Our Links</h3>
             <div class="links">
                 <ul>
@@ -21,7 +21,7 @@ wp_footer();
             </div>
         </div>
 
-        <div class="footer_link_block col-md-4 col-lg-2">
+        <div class="footer_link_block col-6 col-sm-6 col-md-4 col-lg-2">
             <h3>Services</h3>
             <div class="links">
                 <ul>
@@ -33,7 +33,7 @@ wp_footer();
             </div>
         </div>
 
-        <div class="footer_link_block col-md-4 col-lg-2">
+        <div class="footer_link_block col-6 col-sm-6 col-md-4 col-lg-2">
             <h3>Resources</h3>
             <div class="links">
                 <ul>
@@ -44,7 +44,7 @@ wp_footer();
             </div>
         </div>
 
-        <div class="footer_link_block col-md-4 col-lg-2">
+        <div class="footer_link_block col-6 col-sm-6 col-md-4 col-lg-2">
             <h3>Support</h3>
             <div class="links">
                 <ul>
@@ -55,7 +55,7 @@ wp_footer();
             </div>
         </div>
 
-        <div class="footer_link_block col-md-4 col-lg-2">
+        <div class="footer_link_block col-6 col-sm-6 col-md-4 col-lg-2">
             <h3>Follow Us</h3>
             <div class="links">
                 <ul>

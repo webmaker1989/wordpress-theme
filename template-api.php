@@ -1,4 +1,5 @@
 <?php
+
 /*
 Template Name: Test API
 */
@@ -8,7 +9,7 @@ Template Name: Test API
 <div class= "container">
 
 <?php if ( has_post_thumbnail() ) : ?>
-            <a href="<?php the_permalink(); ?>">
+            <a href="<?php esc_html(the_permalink()); ?>">
             <img  src="<?php the_post_thumbnail_url();?>" title="<?php the_title_attribute(); ?>" 
              alt="<?php the_title();?>" class= "img-fluid my-2 img-thumbnail">
             </a>

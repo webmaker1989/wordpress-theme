@@ -1,0 +1,16 @@
+{
+    "name": "sabi5/starwebfront",
+    "type": "project",
+    "license": "gpl",
+    "autoload": {
+        "psr-4": {
+            "Starwebfront\\": "inc/"
+        }
+    },
+    "authors": [
+        {
+            "name": "sarbjeet"
+        }
+    ],
+    "require": {}
+}
