@@ -1,76 +1,25 @@
 <?php
 
-header('X-XSS-Protection: 1; mode=block');
-header('X-Content-Type-Options: nosniff');
+/* spl_autoload_register(function($class){
+   include 'inc/'. $class . '.php';
+}); */
 
-/**add Style, bootstrap, jquery, font-awesome file */
+if(file_exists(dirname(__FILE__). '/vendor/autoload.php')){
+    require_once(dirname(__FILE__). '/vendor/autoload.php');
+  }
 
-function register_stylesheet(){
 
-    wp_enqueue_script( 'jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js', 
-    array(), '1.1', 'true');
-
-    wp_enqueue_style( 'bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css', array(), '1.1', 
-    'all');
-
-    wp_enqueue_script( 'bootstrap-script', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js', 
-    array(), '1.1', 'true');
-
-    wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' );
-
-    wp_enqueue_style('slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), false, 'all');
-
-    wp_enqueue_style('slick-theme', 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css', array('slick-css'), 
-    false, 'all');
-    
-    wp_enqueue_script( 'slick-script', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', 
-    array(), false , true);
-
-    wp_enqueue_style( 'main-style', get_template_directory_uri() . '/assets/css/main.css', array(), 
-    filemtime(get_template_directory() . '/assets/css/main.css'), 'all');
-
-    wp_enqueue_style( 'style', get_template_directory_uri() . '/style.css', array(), 
-    filemtime(get_template_directory() . '/style.css'), 'all');
-}
-
-add_action('wp_enqueue_scripts', 'register_stylesheet');
-
+/** register scripts and styles */  
+use Starwebfront\classes\RegisterScripts;
+new RegisterScripts();
 
 
 
 /**Add basic theme support functions  */
 
-function starweb_theme_support() {
-
-    add_theme_support( 'title-tag' );
-    
-    add_theme_support( 'custom-logo', array(
-        'height' => 480,
-        'width'  => 720,
-    ) );
-
-    /* post formats */
-    add_theme_support( 'post-formats',  array( 'aside', 'gallery', 'quote', 'image', 'video' ) );
-    
-    /* post thumbnails */
-    add_theme_support( 'post-thumbnails', array( 'post', 'page', 'project' ) );
-  
-    /* HTML5 */
-    add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 
-    'style', 'script' ) );
-  
-    /* automatic feed links */
-    add_theme_support( 'automatic-feed-links' );
-    
-    /* custom background */
-    add_theme_support( 'custom-background' );
-
-    /**widgets */
-    add_theme_support('widgets');
-
-  
-}
-add_action( 'after_setup_theme', 'starweb_theme_support' );
+use Starwebfront\classes\AddThemeSupport;
+$test = new AddThemeSupport();
+add_action( 'after_setup_theme', array($test,'theme_support'));
 
 
 

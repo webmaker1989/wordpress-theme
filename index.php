@@ -14,9 +14,19 @@
    require_once(dirname(__FILE__). '/vendor/autoload.php');
  }
 
- use Starwebfront\Student;
+ use Starwebfront\test\Student;
  use Starwebfront\Test;
  use Starwebfront\Person;
+
+ use Starwebfront\MySingleton;
+
+
+ $singletonPattern = MySingleton::getInstance();
+
+ $singletonPattern->doSomething();
+
+
+ 
 
  //new Student();
  Student::check();
