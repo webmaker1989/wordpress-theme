@@ -4,6 +4,10 @@ namespace Starwebfront\classes;
 
 class AddThemeSupport{
 
+    public function __construct(){
+        add_action( 'after_setup_theme', array($this,'theme_support'));
+    }
+
     public function theme_support(){
     
     add_theme_support( 'title-tag' );

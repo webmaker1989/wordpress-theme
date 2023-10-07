@@ -14,12 +14,10 @@ use Starwebfront\classes\RegisterScripts;
 new RegisterScripts();
 
 
-
 /**Add basic theme support functions  */
-
 use Starwebfront\classes\AddThemeSupport;
-$test = new AddThemeSupport();
-add_action( 'after_setup_theme', array($test,'theme_support'));
+new AddThemeSupport();
+
 
 
 
@@ -607,4 +605,51 @@ function corona_fun($atts) {
     }
 
     return "Population of $city_name: $population";
+}
+
+
+
+
+/**-
+ * Appointment form with fetch javascritpt
+ */
+
+//first enqueue js file and localize script to pass the object values
+//make sure the handle of localize script should be same of as enqueue script 
+
+function appointment_formajax_script(){
+
+    wp_enqueue_script( 'appointment-script', get_template_directory_uri().'/assets/js/appointment-form.js', 
+    array('jquery'), '1.1', 'true');
+
+    wp_localize_script('appointment-script', 'form_val', array(
+        'url' => admin_url('admin-ajax.php')
+    ));
+
+}
+
+add_action('wp_enqueue_scripts','appointment_formajax_script');
+
+
+//get_appointment here is the action that will be send with the form
+
+add_action('wp_ajax_get_appointment', 'get_appointment_function');
+add_action('wp_ajax_nopriv_get_appointment', 'get_appointment_function'); 
+
+
+function get_appointment_function(){
+    // Access data sent via AJAX
+    $fname = sanitize_text_field($_POST['fname']);
+    $lname = sanitize_text_field($_POST['lname']);
+
+
+
+    // Prepare a response (in this case, sending back the processed data)
+       $response = array(
+        'message' => 'Data received and processed successfully',
+        'fname' => $fname,
+        'lname' => $lname,
+    ); 
+    // Send the JSON-encoded response
+    wp_send_json_success($response);
 }
