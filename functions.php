@@ -641,12 +641,12 @@ function get_appointment_function(){
     // Access data sent via AJAX
     $fname = sanitize_text_field($_POST['fname']);
     $lname = sanitize_text_field($_POST['lname']);
-
+    $msg = sanitize_text_field($_POST['msg']);
 
 
     // Prepare a response (in this case, sending back the processed data)
        $response = array(
-        'message' => 'Data received and processed successfully',
+        'message' => $msg,
         'fname' => $fname,
         'lname' => $lname,
     ); 

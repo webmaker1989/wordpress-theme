@@ -21,6 +21,8 @@ function submit_data(e){
 
   //console.log(formdata);
 
+  /*if it's not clear if your server is set up to accept JSON data. If your server expects form data, 
+  you should use the FormData object instead. */
 
 const url = `${form_val.url}?action=get_appointment`;
 
@@ -33,6 +35,7 @@ fetch(url , {
 .then(response => {
     // Handle the response.
     console.log(response);
+    console.log(response.data.fname);
 })
 
 .catch(error => {
